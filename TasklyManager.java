@@ -31,4 +31,11 @@ public class TasklyManager {
         }
         return courseMap.get(courseName).removeTask();
     }
+
+    public String getCourseTaskList(String courseName){
+        if(!courseMap.containsKey(courseName)){
+            return null;
+        }
+        return courseMap.get(courseName).getTasks();
+    }
 }
