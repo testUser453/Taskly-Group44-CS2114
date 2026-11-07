@@ -11,20 +11,14 @@ public class TasklyManager {
         courseMap = new HashMap<>();
     }
 
-    // Define input string to be: "CS_2114 Challenge_Exercise_11 150"
-    // This DEFINITELY NEEDS TO CHANGE
-    public void addTask(String input){
-        //split parameter into a String array
-        String[] inArr = input.split(" ");
-        String courseName = inArr[0];
-        String taskName = inArr[1];
-        Integer numMins = Integer.decode(inArr[2]); // not sure if this is right
-
+    // Changed input to be three parameters
+    public void addTask(String courseName, String taskName, String numMins){
+        Integer mins = Integer.decode(numMins);
         if(!courseMap.containsKey(courseName)){
             Course nCourse = new Course(courseName);
             courseMap.put(courseName, nCourse);
         }
-        Task nTask = new Task(taskName, numMins);
+        Task nTask = new Task(taskName, mins);
         courseMap.get(courseName).addTask(nTask);
     }
 
