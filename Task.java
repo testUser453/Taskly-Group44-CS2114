@@ -40,8 +40,7 @@ public class Task {
     }
 
     public String toString(){
-        String str = "Task Name: " + name + " Total Mins to complete task: " + mins + " Due Date of task: " + dueDate;
-        return str;
+        return "Task Name: " + name + " Total Mins to complete task: " + mins + " Due Date of task: " + dueDate;
     }
 
 
