@@ -24,7 +24,8 @@ public class TasklyView {
         */
 
         Scanner scanner = new Scanner(System.in);
-
+        TasklyManager taskManager = new TasklyManager();
+        
         System.out.println("Hello! Welcome to Taskly!");
         
         boolean run = true;
