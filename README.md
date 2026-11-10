@@ -140,7 +140,13 @@ Compile the program:
 javac *.java
 ```
 
-Run Taskly:
+Run Taskly with the driver: TasklyModelDriver
+(In the driver, tasks have to be updated manually and courses have to be updated manually)
+```bash
+java TasklyModelDriver
+```
+
+Run Taskly with UI:
 
 ```bash
 java TasklyView
