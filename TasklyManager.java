@@ -47,4 +47,8 @@ public class TasklyManager {
         }
         return courseMap.get(courseName).getTasks();
     }
+
+    public String getCoursesWithTasks(){
+        return courseMap.keySet().toString();
+    }
 }
