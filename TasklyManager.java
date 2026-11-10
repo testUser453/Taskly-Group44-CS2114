@@ -22,6 +22,14 @@ public class TasklyManager {
         courseMap.get(courseName).addTask(nTask);
     }
 
+    // Get the next task
+    public String getNextTask(String courseName){
+        if(!courseMap.containsKey(courseName) || courseMap.get(courseName).peekNextTask() == null){
+            return "There are no tasks left for this course, or the course doesn't exist";
+        }
+        return courseMap.get(courseName).peekNextTask().toString();
+    }
+
     // Removes and returns task that was recently removed 
     // this code DOES NOT account for exceptions that could be thrown from Course's removeTask() method
     // this returns null if the courseMap does not contain the course.
