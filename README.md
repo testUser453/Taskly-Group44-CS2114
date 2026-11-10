@@ -141,7 +141,7 @@ javac *.java
 ```
 
 Run Taskly with the driver: TasklyModelDriver
-(In the driver, tasks have to be updated manually and courses have to be updated manually)
+(In the driver, tasks have to be added and removed manually with the methods in TasklyManager)
 ```bash
 java TasklyModelDriver
 ```
