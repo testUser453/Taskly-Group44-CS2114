@@ -42,10 +42,10 @@ public class TasklyView {
                         System.out.println("Incorrect input for number");
                         continue;
                     }
-                    System.out.println("started adding all the arguments");
+                    // System.out.println("started adding all the arguments");
                     taskManager.addTask(arr[0], arr[1], arr[2]);
-                    System.out.println("finished adding all arguments");
-                    System.out.println("Task list for element is: " + taskManager.getNextTask(arr[0]));
+                    // System.out.println("finished adding all arguments");
+                    // System.out.println("Task list for element is: " + taskManager.getNextTask(arr[0]));
                 }
             }
 
