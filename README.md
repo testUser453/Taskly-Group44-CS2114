@@ -120,11 +120,11 @@ The table below lists the classes and test files in our project. We will update 
 
 | Class or Test File | Contributor(s) | Contribution |
 |---|---|---|
-| `Task.java` | Aneesh | Wrote, revised, or reviewed task fields and methods |
-| `Course.java` | Aneesh | Wrote, revised, or reviewed queue operations |
+| `Task.java` | Aneesh & Matias | Wrote, revised, or reviewed task fields and methods |
+| `Course.java` | Aneesh & Emma | Wrote, revised, or reviewed queue operations |
 | `TasklyManager.java` | Emma & Aneesh | Wrote, revised, or reviewed course and task management |
 | `TasklyView.java` | Matias & Aneesh | Wrote, revised, or reviewed Scanner input and menu |
-| Model test file(s), if created | TBD | Wrote and ran tests for model methods and bad inputs |
+| Model test file(s), if created | Aneesh | Wrote and ran tests for model methods and bad inputs |
 
 ### GenAI Use
 
