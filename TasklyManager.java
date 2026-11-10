@@ -25,7 +25,8 @@ public class TasklyManager {
     // Get the next task
     public String getNextTask(String courseName){
         if(!courseMap.containsKey(courseName) || courseMap.get(courseName).peekNextTask() == null){
-            return "There are no tasks left for this course, or the course doesn't exist";
+            // return "There are no tasks left for this course, or the course doesn't exist";
+            return "error";
         }
         return courseMap.get(courseName).peekNextTask().toString();
     }
