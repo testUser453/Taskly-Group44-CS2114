@@ -30,46 +30,72 @@ public class TasklyView {
         
         boolean run = true;
         while(run){
-            System.out.println("To input a task, type TASK. To do an action, type an ACTION. If you are done interacting with the program, type DONE");
+            System.out.println("To input a task, type TASK. To do an action, type an ACTION. If you are done interacting with the program, type EXIT");
             String command = scanner.nextLine();
-            if(!command.equals("TASK") || !command.equals("ACTION") || !command.equals("DONE")){
+            if(!command.equals("TASK") || !command.equals("ACTION") || !command.equals("EXIT")){
                 continue;
             }
 
-            if(command.equals("DONE")){
+            if(command.equals("EXIT")){
                 break;
             }
 
             if(command.equals("TASK")){
                 // boolean task = true;
                 // while(task)
-                System.out.println("Input your task in the following format: \nPlease input your tasks in the following format:\n'class_name assignment_name num_mins_to_complete'\nExample: 'CS_2114 sunday_lessons 60':");
-                String inStr = scanner.nextLine();
-                String[] arr = inStr.split(" ");
-                if(arr.length != 3){
-                    System.out.println("Incorrect number of arguments");
+                boolean task = true;
+                while(task){
+                    System.out.println("Input your task in the following format: \nPlease input your tasks in the following format:\n'course_name assignment_name num_mins_to_complete'\nExample: 'CS_2114 sunday_lessons 60'. If you are done adding tasks, type 'done':");
+                    String inStr = scanner.nextLine();
+                    if(inStr.equals("done")){
+                        break;
+                    }
+                    String[] arr = inStr.split(" ");
+                    if(arr.length != 3){
+                        System.out.println("Incorrect number of arguments");
+                    }
+                    try {
+                        Integer.parseInt(arr[2]);
+                    } catch (Exception e){
+                        System.out.println("Incorrect input for number");
+                        continue;
+                    }
+                    taskManager.addTask(arr[0], arr[1], arr[2]);
                 }
-                try {
-                    Integer.parseInt(arr[2]);
-                } catch (Exception e){
-                    System.out.println("Incorrect input for number");
-                    continue;
-                }
-                taskManager.addTask(arr[0], arr[1], arr[2]);
             }
 
             if(command.equals("ACTION")){
                 // need to peek task for each class
                 // need to remove that task when user specifies
-                System.out.println("Options:\n-To see the next task to complete for a class, type the 'class_name peek'");
-                String nL = scanner.nextLine();
-                if(nL.contains("peek")){
-                    String[] nL_arr = nL.split(" ");
-                    if(taskManager.getNextTask(nL_arr[0]).equals("error")){
-                        System.out.println("There is an error, please redo the command");
+                boolean action = true;
+                while(action){
+                    System.out.println("Options:\n-To see the next task to complete for a course, type the 'course_name peek'\n-To get out of the actions menu, type 'done'");
+                    String nL = scanner.nextLine();
+                    if(nL.equals("done")){
+                        break;
+                    }
+                    if(nL.contains("peek")){
+                        String[] nL_arr = nL.split(" ");
+                        String courseName = nL_arr[0];
+                        if(taskManager.getNextTask(courseName).equals("error")){
+                            System.out.println("You have either completed all tasks for this course, or your this course does not exist");
+                            continue;
+                        }
+
+                        System.out.println(taskManager.getNextTask(nL_arr[0]));
+                        
+                        System.out.println("\nWhen you are finished with this task type 'finished'. If you want to worry about a different action, type 'other'");
+                        nL = scanner.nextLine();
+                        if(nL.equals("finished")){
+                            taskManager.removeTask(courseName);
+                            continue;
+                        }
+                        if(nL.equals("other")){
+                            continue;
+                        }
                         continue;
                     }
-
+                    
                 }
             }   
         }
