@@ -1,4 +1,4 @@
-# Taskly — First Working Prototype
+# Taskly : First Working Prototype
 
 ## Project Overview
 
