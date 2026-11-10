@@ -1,6 +1,7 @@
 import java.util.List;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.ArrayList;
 // import java.util.EmptyQueueException; for some reason this is also giving me an error
 
 public class Course {
@@ -30,7 +31,7 @@ public class Course {
     }
 
     public String getTasks(){
-        return taskQ.toString();
+        return new ArrayList<>(taskQ);
     }
 
     public Task peekNextTask(){
