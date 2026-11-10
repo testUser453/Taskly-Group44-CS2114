@@ -31,7 +31,8 @@ public class TasklyView {
         while(run){
             System.out.println("To input a task, type TASK. To do an action, type an ACTION");
             String command = scanner.nextLine();
-            if(!command.equals("TASK") || !command.equals("ACTION")){
+            if (!command.equals("TASK") && !command.equals("ACTION")) {
+                System.out.println("Invalid command.");
                 continue;
             }
 
