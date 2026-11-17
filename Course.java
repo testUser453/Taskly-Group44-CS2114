@@ -7,11 +7,11 @@ public class Course {
     private String name;
 
     public Course(String course_name){
-        if (courseName == null || courseName.trim().isEmpty()) {
+        if (course_name == null || course_name.trim().isEmpty()) {
             throw new IllegalArgumentException("Course name cannot be blank.");
         }
         taskQ = new LinkedList<>();
-        name = course_name;
+        name = course_name.trim();
     }
 
     public void addTask(Task taskToAdd){

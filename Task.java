@@ -16,10 +16,10 @@ public class Task {
     }
 
     public void setName(String task_name){
-        if (taskName == null || taskName.trim().isEmpty()) {
+        if (task_name == null || task_name.trim().isEmpty()) {
             throw new IllegalArgumentException("Task name cannot be blank.");
         }
-        name = taskName.trim();
+        name = task_name.trim();
     }
 
     public String getName(){
@@ -27,10 +27,10 @@ public class Task {
     }
 
     public void setMinsToComplete(int num_mins){
-        if (numMins <= 0) {
+        if (num_mins <= 0) {
             throw new IllegalArgumentException("Minutes must be positive.");
         }
-        mins = numMins;
+        mins = num_mins;
     }
 
     public int getMinsToComplete(){

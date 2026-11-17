@@ -1,4 +1,5 @@
-// import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 
 public class TasklyManager {
@@ -25,13 +26,11 @@ public class TasklyManager {
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("Minutes must be a number.");
         }
-        // Validate the task before creating a new course.
-        Task newTask = new Task(taskName, mins, dueDate);
         String name = courseName.trim();
         if (!courseMap.containsKey(name)) {
             courseMap.put(name, new Course(name));
         }
-        courseMap.get(name).addTask(newTask);
+        courseMap.get(name).addTask(new Task(taskName, mins));
     }
 
     // Get the next task
