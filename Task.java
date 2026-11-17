@@ -2,7 +2,7 @@ public class Task {
     private String name; // name of task
     private int mins; // number of minutes it takes to complete the task
     private String dueDate; //This field is for the future when we implement a PriorityQueue
-    private boolean complete = false; // tracks completion
+    private boolean completed = false; // tracks completion
 
     public Task(String task_name, int num_mins){
         name = task_name;
