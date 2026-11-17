@@ -44,7 +44,15 @@ public class TasklyView {
                         continue;
                     }
                     // System.out.println("started adding all the arguments");
-                    taskManager.addTask(arr[0], arr[1], arr[2]);
+                    
+                    try {
+                        taskManager.addTask(arr[0], arr[1], arr[2]);
+                        System.out.println("Task added!");
+                    }
+                    catch (IllegalArgumentException e) {
+                        System.out.println(e.getMessage());
+                    }
+
                     // System.out.println("finished adding all arguments");
                     // System.out.println("Task list for element is: " + taskManager.getNextTask(arr[0]));
                 }
@@ -55,11 +63,35 @@ public class TasklyView {
                 // need to remove that task when user specifies
                 boolean action = true;
                 while(action){
-                    System.out.println("\nOptions:\n-To see the next task to complete for a course, type the 'course_name'\n-To get out of the actions menu, type 'done'\n");
+                    
+                    System.out.println("\nOptions:\n"
+                        + "-To see the next task, type the 'course_name'\n"
+                        + "-To mark a task completed, type 'COMPLETE'\n"
+                        + "-To get out of the actions menu, type 'done'\n");
+
                     String nL = scanner.nextLine();
                     if(nL.equals("done")){
                         break;
                     }
+                    
+                    if(nL.equals("COMPLETE")){
+                        System.out.println("Enter the course name:");
+                        String courseName = scanner.nextLine();
+
+                        System.out.println("Enter the task name:");
+                        String taskName = scanner.nextLine();
+
+                        boolean completed = taskManager.completeTask(courseName, taskName);
+
+                        if(completed){
+                            System.out.println("Task marked as completed!");
+                        }
+                        else{
+                            System.out.println("Task not found or already completed.");
+                        }
+                        continue;
+                    }
+
                     // System.out.println("code comes here 1");
                     String courseName = nL;
                     if(taskManager.getNextTask(courseName).equals("error")){
