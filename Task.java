@@ -2,6 +2,7 @@ public class Task {
     private String name; // name of task
     private int mins; // number of minutes it takes to complete the task
     private String dueDate; //This field is for the future when we implement a PriorityQueue
+    private boolean complete = false; // tracks completion
 
     public Task(String task_name, int num_mins){
         name = task_name;
@@ -40,7 +41,15 @@ public class Task {
     }
 
     public String toString(){
-        return "Task Name: " + name + " Total Mins to complete task: " + mins + " Due Date of task: " + dueDate;
+        return "Task Name: " + name + " Total Mins to complete task: " + mins + " Due Date of task: " + dueDate + " Completed: " + completed;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 
 
