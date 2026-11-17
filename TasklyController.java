@@ -1,4 +1,5 @@
-// import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 
 public class TasklyController {
@@ -13,39 +14,46 @@ public class TasklyController {
 
     // Changed input to be three parameters
     public void addTask(String courseName, String taskName, String numMins){
-        Integer mins = Integer.decode(numMins);
-        if(!courseMap.containsKey(courseName)){
-            Course nCourse = new Course(courseName);
-            courseMap.put(courseName, nCourse);
+        if (courseName == null || courseName.trim().isEmpty()) {
+            throw new IllegalArgumentException("Course name cannot be blank.");
         }
-        Task nTask = new Task(taskName, mins);
-        courseMap.get(courseName).addTask(nTask);
+        if (numMins == null) {
+            throw new IllegalArgumentException("Minutes must be a number.");
+        }
+        int mins;
+        try {
+            mins = Integer.parseInt(numMins);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Minutes must be a number.");
+        }
+        String name = courseName.trim();
+        if (!courseMap.containsKey(name)) {
+            courseMap.put(name, new Course(name));
+        }
+        courseMap.get(name).addTask(new Task(taskName, mins));
     }
 
     // Get the next task
     public String getNextTask(String courseName){
-        if(!courseMap.containsKey(courseName) || courseMap.get(courseName).peekNextTask() == null){
+        Course course = courseMap.get(courseName);
+        if (course == null || course.peekNextTask() == null) {
             // return "There are no tasks left for this course, or the course doesn't exist";
             return "error";
         }
-        return courseMap.get(courseName).peekNextTask().toString();
+        return course.peekNextTask().toString();
     }
 
     // Removes and returns task that was recently removed 
     // this code DOES NOT account for exceptions that could be thrown from Course's removeTask() method
     // this returns null if the courseMap does not contain the course.
     public Task removeTask(String courseName) {
-        if(!courseMap.containsKey(courseName)) {
-            return null;
-        }
-        return courseMap.get(courseName).removeTask();
+        Course course = courseMap.get(courseName);
+        return course == null ? null : course.removeTask();
     }
 
     public String getCourseTaskList(String courseName){
-        if(!courseMap.containsKey(courseName)){
-            return null;
-        }
-        return courseMap.get(courseName).getTasks();
+        Course course = courseMap.get(courseName);
+        return course == null ? null : course.getTasks();
     }
 
     public String getCoursesWithTasks(){
@@ -54,17 +62,28 @@ public class TasklyController {
 
     
     public boolean completeTask(String courseName, String taskName) {
-        if (courseName == null || taskName == null) {
-            return false;
-        }
-
         Course course = courseMap.get(courseName);
+        return course != null && course.completeTask(taskName);
+    }
 
-        if (course == null) {
-            return false;
+    // Shows tasks from all courses by date, without changing queue order.
+    public String getSortedTasks() {
+        ArrayList<Task> tasks = new ArrayList<>();
+        for (Course course : courseMap.values()) {
+            tasks.addAll(course.getTaskList());
         }
-
-        return course.completeTask(taskName);
+        tasks.sort(Comparator.comparing(Task::getDueDate,
+            Comparator.nullsLast(Comparator.comparing(date ->
+                java.time.LocalDate.parse(date,
+                    java.time.format.DateTimeFormatter.ofPattern("MM/dd/uuuu"))))));
+        if (tasks.isEmpty()) {
+            return "No tasks available.";
+        }
+        StringBuilder result = new StringBuilder();
+        for (Task task : tasks) {
+            result.append(task).append("\n");
+        }
+        return result.toString();
     }
 
 }
