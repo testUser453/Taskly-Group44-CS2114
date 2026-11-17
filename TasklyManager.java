@@ -51,4 +51,20 @@ public class TasklyManager {
     public String getCoursesWithTasks(){
         return courseMap.keySet().toString();
     }
+
+    
+    public boolean completeTask(String courseName, String taskName) {
+        if (courseName == null || taskName == null) {
+            return false;
+        }
+
+        Course course = courseMap.get(courseName);
+
+        if (course == null) {
+            return false;
+        }
+
+        return course.completeTask(taskName);
+    }
+
 }
