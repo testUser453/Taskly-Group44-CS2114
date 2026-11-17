@@ -26,11 +26,13 @@ public class TasklyController {
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("Minutes must be a number.");
         }
+        Task task = new Task(taskName, mins);
+
         String name = courseName.trim();
         if (!courseMap.containsKey(name)) {
             courseMap.put(name, new Course(name));
         }
-        courseMap.get(name).addTask(new Task(taskName, mins));
+        courseMap.get(name).addTask(task);
     }
 
     // Get the next task
