@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class TasklyView {
     public static void main(String[] args){
         Scanner scanner = new Scanner(System.in);
-        TasklyManager taskManager = new TasklyManager();
+        TasklyController taskManager = new TasklyController();
 
         System.out.println("Hello! Welcome to Taskly!");
         

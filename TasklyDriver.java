@@ -1,6 +1,6 @@
-public class TasklyModelDriver {
+public class TasklyDriver {
     public static void main(String[] args){
-        TasklyManager taskManager = new TasklyManager();
+        TasklyController taskManager = new TasklyController();
         
         taskManager.addTask("CS_2114", "sunday_hw", "60");
         taskManager.addTask("CS_2114", "hw_1", "60");

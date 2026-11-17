@@ -1,0 +1,70 @@
+// import java.util.LinkedList;
+import java.util.HashMap;
+
+public class TasklyController {
+    // I don't know what data structure to use
+    // private LinkedList<Course> courseList; 
+    private HashMap<String, Course> courseMap;
+
+    public TasklyController(){
+        // courseList = new LinkedList<>();
+        courseMap = new HashMap<>();
+    }
+
+    // Changed input to be three parameters
+    public void addTask(String courseName, String taskName, String numMins){
+        Integer mins = Integer.decode(numMins);
+        if(!courseMap.containsKey(courseName)){
+            Course nCourse = new Course(courseName);
+            courseMap.put(courseName, nCourse);
+        }
+        Task nTask = new Task(taskName, mins);
+        courseMap.get(courseName).addTask(nTask);
+    }
+
+    // Get the next task
+    public String getNextTask(String courseName){
+        if(!courseMap.containsKey(courseName) || courseMap.get(courseName).peekNextTask() == null){
+            // return "There are no tasks left for this course, or the course doesn't exist";
+            return "error";
+        }
+        return courseMap.get(courseName).peekNextTask().toString();
+    }
+
+    // Removes and returns task that was recently removed 
+    // this code DOES NOT account for exceptions that could be thrown from Course's removeTask() method
+    // this returns null if the courseMap does not contain the course.
+    public Task removeTask(String courseName) {
+        if(!courseMap.containsKey(courseName)) {
+            return null;
+        }
+        return courseMap.get(courseName).removeTask();
+    }
+
+    public String getCourseTaskList(String courseName){
+        if(!courseMap.containsKey(courseName)){
+            return null;
+        }
+        return courseMap.get(courseName).getTasks();
+    }
+
+    public String getCoursesWithTasks(){
+        return courseMap.keySet().toString();
+    }
+
+    
+    public boolean completeTask(String courseName, String taskName) {
+        if (courseName == null || taskName == null) {
+            return false;
+        }
+
+        Course course = courseMap.get(courseName);
+
+        if (course == null) {
+            return false;
+        }
+
+        return course.completeTask(taskName);
+    }
+
+}
