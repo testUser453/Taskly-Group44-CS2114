@@ -4,16 +4,18 @@ public class Task {
     private String dueDate; //This field is for the future when we implement a PriorityQueue
     private boolean completed = false; // tracks completion
 
-    public Task(String task_name, int num_mins){
-        name = task_name;
-        mins = num_mins;
+    
+    public Task(String task_name, int num_mins) {
+        setName(task_name);
+        setMinsToComplete(num_mins);
     }
 
-    public Task(String task_name, int num_mins, String due_date){
-        name = task_name;
-        mins = num_mins;
-        dueDate = due_date;
+    public Task(String task_name, int num_mins, String due_date) {
+        setName(task_name);
+        setMinsToComplete(num_mins);
+        setDueDate(due_date);
     }
+
 
     public void setName(String task_name){
         if (task_name == null || task_name.trim().isEmpty()) {
