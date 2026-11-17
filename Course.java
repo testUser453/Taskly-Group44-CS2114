@@ -7,11 +7,17 @@ public class Course {
     private String name;
 
     public Course(String course_name){
+        if (courseName == null || courseName.trim().isEmpty()) {
+            throw new IllegalArgumentException("Course name cannot be blank.");
+        }
         taskQ = new LinkedList<>();
         name = course_name;
     }
 
     public void addTask(Task taskToAdd){
+        if (taskToAdd == null) {
+            throw new IllegalArgumentException("Task cannot be null.");
+        }
         taskQ.add(taskToAdd);
     }
 
@@ -43,13 +49,18 @@ public class Course {
     public int getTaskCount(){
         return taskQ.size();
     }
- 
+
+    // A copy keeps the original queue order unchanged when sorting.
+    public LinkedList<Task> getTaskList() { 
+        return new LinkedList<>(taskQ); 
+    }
+    
     public boolean completeTask(String taskName) {
-        if (taskName == null || taskName.trim().isEmpty()) {
-            return false;
+        if (taskName == null || taskName.trim().isEmpty()) { 
+            return false; 
         }
         for (Task task : taskQ) {
-            if (task.getName().equals(taskName)) {
+            if (task.getName().equals(taskName.trim()) && !task.isCompleted()) {
                 task.setCompleted(true);
                 return true;
             }
