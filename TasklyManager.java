@@ -67,4 +67,24 @@ public class TasklyManager {
         return course != null && course.completeTask(taskName);
     }
 
+    // Shows tasks from all courses by date, without changing queue order.
+    public String getSortedTasks() {
+        ArrayList<Task> tasks = new ArrayList<>();
+        for (Course course : courseMap.values()) {
+            tasks.addAll(course.getTaskList());
+        }
+        tasks.sort(Comparator.comparing(Task::getDueDate,
+            Comparator.nullsLast(Comparator.comparing(date ->
+                java.time.LocalDate.parse(date,
+                    java.time.format.DateTimeFormatter.ofPattern("MM/dd/uuuu"))))));
+        if (tasks.isEmpty()) { 
+            return "No tasks available."; 
+        }
+        StringBuilder result = new StringBuilder();
+        for (Task task : tasks) {
+            result.append(task).append("\n");
+        }
+        return result.toString();
+    }
+    
 }
