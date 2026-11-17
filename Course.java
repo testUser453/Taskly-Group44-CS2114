@@ -43,5 +43,18 @@ public class Course {
     public int getTaskCount(){
         return taskQ.size();
     }
+ 
+    public boolean completeTask(String taskName) {
+        if (taskName == null || taskName.trim().isEmpty()) {
+            return false;
+        }
+        for (Task task : taskQ) {
+            if (task.getName().equals(taskName)) {
+                task.setCompleted(true);
+                return true;
+            }
+        }
+        return false;
+    }
 
 }
