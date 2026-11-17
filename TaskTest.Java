@@ -1,6 +1,5 @@
-import static org.junit.jupiter.api.Assertions.*;
-
-import org.junit.jupiter.api.Test;
+import static org.junit.Assert.*;
+import org.junit.Test;
 
 /**
  * Tests Task: both constructors, name / minutes / due date / completed
