@@ -16,7 +16,10 @@ public class Task {
     }
 
     public void setName(String task_name){
-        name = task_name;
+        if (taskName == null || taskName.trim().isEmpty()) {
+            throw new IllegalArgumentException("Task name cannot be blank.");
+        }
+        name = taskName.trim();
     }
 
     public String getName(){
@@ -24,7 +27,10 @@ public class Task {
     }
 
     public void setMinsToComplete(int num_mins){
-        mins = num_mins;
+        if (numMins <= 0) {
+            throw new IllegalArgumentException("Minutes must be positive.");
+        }
+        mins = numMins;
     }
 
     public int getMinsToComplete(){
@@ -33,6 +39,19 @@ public class Task {
 
     public void setDueDate(String date){
         //need a check or something to make sure that the right for date is given
+        // VVV
+        if (date == null || date.trim().isEmpty()) {
+            dueDate = null; // The original three-argument manager call has no due date.
+            return;
+        }
+        try {
+            java.time.format.DateTimeFormatter formatter =
+                java.time.format.DateTimeFormatter.ofPattern("MM/dd/uuuu")
+                    .withResolverStyle(java.time.format.ResolverStyle.STRICT);
+            java.time.LocalDate.parse(date, formatter);
+        } catch (java.time.format.DateTimeParseException e) {
+            throw new IllegalArgumentException("Date must be a real date in MM/DD/YYYY format.");
+        }
         dueDate = date;
     }
 
@@ -41,7 +60,8 @@ public class Task {
     }
 
     public String toString(){
-        return "Task Name: " + name + " Total Mins to complete task: " + mins + " Due Date of task: " + dueDate + " Completed: " + completed;
+        return "Task Name: " + name + " Total Mins to complete task: " + mins 
+            + " Due Date of task: " + (dueDate == null ? "Not set" : dueDate) + " Completed: " + completed;
     }
 
     public boolean isCompleted() {
