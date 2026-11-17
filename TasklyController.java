@@ -88,4 +88,27 @@ public class TasklyController {
         return result.toString();
     }
 
+    public String getSortedByMins(String courseName) {
+        Course course = courseMap.get(courseName);
+
+        if (course == null || course.getTaskCount() == 0) {
+            return "No tasks available.";
+        }
+
+        // Make a copy of the course's queue
+        ArrayList<Task> tasks = new ArrayList<>(course.getTaskList());
+
+        // Sort tasks by minutes required, from least to greatest
+        tasks.sort(Comparator.comparingInt(Task::getMinsToComplete));
+
+        // Build the result string
+        StringBuilder result = new StringBuilder();
+
+        for (Task task : tasks) {
+            result.append(task).append("\n");
+        }
+
+        return result.toString();
+    }
+
 }

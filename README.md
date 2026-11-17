@@ -1,4 +1,4 @@
-# Taskly : Deliverable 4
+# Taskly: Deliverable 4
 
 ## Project Overview
 
@@ -12,71 +12,69 @@ Our goal is to create a simple way for students to keep track of their assignmen
 
 Our original specification planned for a Model-View-Controller (MVC) design with `Task`, `Course`, a custom queue, `TasklyManager`, and `TasklyView`.
 
-In our current prototype, we kept the four main classes but decided to use Java's built-in `LinkedList` through the `Queue<Task>` interface instead of writing our own queue class. This allowed us to focus on connecting the classes and getting the program running.
+In our current prototype, we kept the main classes but decided to use Java's built-in `LinkedList` through the `Queue<Task>` interface instead of writing our own queue class. This allowed us to focus on connecting the classes and getting the program running.
 
 We also made a few changes to our methods. Our `addTask()` method currently takes three String parameters: the course name, task name, and estimated minutes. We originally planned to include due dates, but we have not added them to the input system yet. The `Task` class already has a String field for due dates.
 
-Our specification also planned for validation of incorrect inputs. Right now, most input checking happens in `TasklyView`, such as checking commands and the number of arguments. `TasklyManager` handles converting minutes into an integer, but it does not yet check every invalid value.
+Our specification also planned for validation of incorrect inputs. We added validation in `TasklyController.addTask()` for blank course names and invalid minute values. However, we still need to check every possible invalid value, including blank task names and negative minutes.
 
-We have started checking bad inputs through the menu, but we still need more tests for the model classes.
+### How Did Our Design Absorb the Change?
 
-### Did the Model Stand Alone?
+For our new feature, we added the ability to mark assignments as completed without immediately removing them.
+
+We added a `completeTask()` method to `TasklyController` that communicates with the appropriate `Course` and completes the specified task. This allows assignments to have a completion status rather than only being removed from the queue.
+
+Our implementation also includes `getSortedTasks()`, which gathers tasks across courses and sorts them by due date without changing the original queue order.
+
+The main classes involved in our task management logic are `TasklyController`, `Course`, and `Task`. The view must also provide a way for users to access the completion feature.
+
+Our original prediction was that `Task.java`, `TasklyManager.java`, and `TasklyView.java` would need modifications, while `Course.java` would remain mostly unchanged. In the current implementation, we used `TasklyController` instead of `TasklyManager`, and the completion functionality also involves the course management logic.
+
+### Did the Change Cross the Model/View Line?
 
 Our model classes can work without the view. `Task` stores assignment information, and `Course` manages a queue of tasks. Neither class needs Scanner or user input to work.
 
-`TasklyManager` connects the courses and tasks, while `TasklyView` handles user interaction and printing messages.
+`TasklyController` manages the courses and tasks, while `TasklyView` handles user interaction and printing messages.
 
-We did not have to move any input or output code into the model to get the program working. The main separation between the model and view is still the same as our specification.
+User actions in the view communicate with `TasklyController`, which updates the model. The view then retrieves information through the controller to display the current state.
 
-One improvement we still need is moving more validation into the manager or model so invalid information cannot be added when the program is used without the view.
+We did not have to move input or output code into the model to implement the task management logic. The main separation between the model and view is still the same as our specification.
 
-### What Happened to Our Unknowns?
+### What Changed From Our D3 Plan?
 
-One thing we needed to figure out was how to store multiple courses and keep their assignments separate. We decided to use a `HashMap<String, Course>` in `TasklyManager`, which allows us to find courses using their names.
+We originally planned to use a custom queue implementation, but decided to use Java's built-in `LinkedList` through the `Queue<Task>` interface instead.
 
-We also figured out how to use a queue to add, view, and remove tasks. We used `LinkedList` to implement the queue and connected those methods to the text menu.
+We also originally planned to use `TasklyManager` as our manager class, but renamed it to `TasklyController`.
 
-Another challenge was reading user input with Scanner. We now have a working menu structure where users can type commands and enter task information.
+Our `addTask()` method currently accepts three String parameters rather than including a due date. We also expanded our implementation with task completion and sorting functionality.
 
-We still need to figure out the best way to sort assignments by due date while keeping dates stored as Strings. We also need to finish checking invalid dates and handling all possible bad inputs.
+We added validation for blank course names and invalid minute values, but still need to expand our validation and testing to cover additional bad inputs.
 
 ### What Doesn't Work Yet?
 
 Our prototype can add, view, and remove tasks, but some parts of our MVP are still incomplete.
 
 - Users cannot enter due dates when adding assignments.
-- Assignments are not sorted from earliest to latest due date.
-- The program does not reject every invalid input, such as negative minutes or blank names.
-- Some empty queue cases still return `null` instead of providing more specific error handling.
-- We have not completed independent model tests for every method and edge case.
+- We still need to fully test sorting assignments from earliest to latest due date.
+- The program does not reject every invalid input, such as negative minutes or blank task names.
+- Some empty queue cases still require more consistent error handling.
+- We need to ensure the completion feature is fully accessible through the view.
+- Additional independent model tests and bad-input cases are still needed.
 
-These are the main issues we plan to address in Deliverable 4.
+These are the main issues we plan to address in the final build.
 
 ## Next Steps
 
 ### Remaining MVP Features
 
-For Deliverable 4, we plan to finish the remaining MVP features in this order:
+For the final build, we plan to finish the remaining MVP features in this order:
 
-1. **Add due dates:** Update `TasklyManager.addTask()` and `TasklyView` so users can enter a due date in `MM/DD/YYYY` format. The date will remain a String in `Task`.
-2. **Validate inputs:** Check for blank names, invalid minutes, impossible dates, missing courses, and empty queues.
-3. **Sort assignments:** Add a method that displays tasks from earliest to latest due date, even when assignments belong to different courses.
-4. **Improve the menu:** Update the text menu to display the sorted assignment list and provide clearer messages.
-5. **Finish testing:** Write and run tests for the model methods, sorting, and invalid inputs.
-
-### New Change Feature
-
-For our required new feature, we plan to add the ability to **mark assignments as completed** without immediately removing them.
-
-We predict this feature will affect:
-
-- **Task.java:** Add a Boolean field to track whether a task is completed, along with getter and setter methods.
-- **TasklyManager.java:** Add a method that finds a task and updates its completion status.
-- **TasklyView.java:** Add an option for users to mark assignments as completed.
-
-We do not expect `Course.java` to need major changes because it will still be responsible for storing tasks in its queue.
-
-After implementing this feature, we will compare our prediction to the classes we actually had to modify.
+1. **Add due dates:** Update `TasklyController.addTask()` and `TasklyView` so users can enter a due date in `MM/DD/YYYY` format.
+2. **Validate inputs:** Check for blank names, invalid or negative minutes, impossible dates, missing courses, and empty queues.
+3. **Finish completion functionality:** Ensure users can mark assignments as completed through the view and see their completion status.
+4. **Improve sorting:** Ensure tasks from different courses are displayed from earliest to latest due date without changing their original queue order.
+5. **Improve the menu:** Update the text menu to display sorted assignments and provide clearer messages.
+6. **Finish testing:** Write and run tests for all core model methods, sorting, completion functionality, and invalid inputs.
 
 ### Stretch Goals
 
@@ -84,23 +82,18 @@ Our main priority is completing the MVP before adding extra features.
 
 We plan to attempt the ability to edit an existing assignment if we have enough time after finishing the required features and tests.
 
-We will postpone any other optional features until the core task management system is working correctly.
+We will postpone other optional features until the core task management system is working correctly.
 
-### New Tests Needed
+### Three-Minute Demo
 
-We plan to add tests for the following methods and situations:
+Our planned demonstration will follow this sequence:
 
-| Method or Feature | Tests Needed |
-|---|---|
-| `addTask()` | Valid task, blank name, invalid minutes, missing course |
-| Due-date validation | Valid date, incorrect format, impossible date |
-| Task sorting | Different due dates, matching due dates, tasks from different courses |
-| `removeTask()` | Normal removal, empty queue, nonexistent course |
-| `peekNextTask()` | Queue with tasks, empty queue |
-| Completion status | Mark task complete, check status, invalid task |
-| Scanner menu | Invalid commands, missing arguments, invalid action |
-
-These tests will help us make sure our changes do not break the existing features.
+1. **Introduction:** Briefly explain Taskly and its purpose.
+2. **Adding tasks:** Demonstrate adding assignments for multiple courses.
+3. **Viewing tasks:** Show how users can retrieve the next assignment for a specific course.
+4. **Completing tasks:** Demonstrate marking an assignment as completed without immediately removing it.
+5. **Sorting:** Show how assignments from multiple courses can be displayed by due date.
+6. **Error handling:** Demonstrate how the program responds to invalid user input.
 
 ### Team Responsibilities
 
@@ -113,22 +106,23 @@ These tests will help us make sure our changes do not break the existing feature
 | Model tests and edge cases | Aneesh & Emma |
 | Final testing and README updates | Emma & Matias |
 
-
 ## Attribution
 
-The table below lists the classes and test files in our project. We will update it with the actual work completed by each team member before submitting.
+The following table lists the classes and test files in our project and the contributions of each team member.
 
 | Class or Test File | Contributor(s) | Contribution |
 |---|---|---|
-| `Task.java` | Aneesh & Matias | Wrote, revised, or reviewed task fields and methods |
-| `Course.java` | Aneesh & Emma | Wrote, revised, or reviewed queue operations |
-| `TasklyManager.java` | Emma & Aneesh | Wrote, revised, or reviewed course and task management |
-| `TasklyView.java` | Matias & Aneesh | Wrote, revised, or reviewed Scanner input and menu |
-| Model test file(s), if created | Aneesh | Wrote and ran tests for model methods and bad inputs |
+| `Task.java` | Aneesh & Matias | Wrote, revised, and reviewed task fields and methods |
+| `Course.java` | Aneesh & Emma | Wrote, revised, and reviewed course and queue operations |
+| `TasklyController.java` | Emma & Aneesh | Wrote, revised, and reviewed course and task management |
+| `TasklyView.java` | Matias & Aneesh | Wrote, revised, and reviewed Scanner input and menu |
+| `TasklyControllerTest.java` | Aneesh | Wrote and ran JUnit tests for TasklyController |
+| `CourseTest.java` | Emma | Wrote and ran JUnit tests for Course |
+| `TaskTest.java` | Matias | Wrote and ran JUnit tests for Task |
 
 ### GenAI Use
 
-We used ChatGPT to review parts of our Java code, help identify problems with Scanner input and validation, and organize our README to match all of the assignment requirements. We reviewed the suggested changes and are responsible for making sure they work with our program.
+We used ChatGPT to help review Java code, identify potential problems with input validation, generate suggestions for JUnit test cases, and troubleshoot compilation and test execution. We reviewed the suggested code and are responsible for understanding, verifying, and testing our implementation.
 
 ## Running the Program
 
@@ -141,7 +135,9 @@ javac TasklyController.java TasklyView.java Task.java Course.java TasklyDriver.j
 ```
 
 Run Taskly with the driver: TasklyModelDriver
+
 (In the driver, tasks have to be added and removed manually with the methods in TasklyManager)
+
 ```bash
 java TasklyModelDriver
 ```
@@ -176,6 +172,5 @@ javac -cp ".:lib/*" TasklyControllerTest.java TaskTest.java CourseTest.java
 ## Step 2. Run the JUnit Tests:
 
 ```bash
-java -jar lib/junit-platform-console-standalone-*.jar execute --class-path bin --scan-class-path
+java -jar lib/junit-platform-console-standalone-*.jar execute --class-path ".:lib/*" --select-class TasklyControllerTest --select-class TaskTest --select-class CourseTest
 ```
-

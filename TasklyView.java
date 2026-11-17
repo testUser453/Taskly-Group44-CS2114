@@ -66,7 +66,7 @@ public class TasklyView {
                     
                     System.out.println("\nOptions:\n"
                         + "-To see the next task, type the 'course_name'\n"
-                        + "-To mark a task completed, type 'COMPLETE'\n"
+                        + "-To see all tasks sorted by number of minutes for a course, type 'sorted'\n"
                         + "-To get out of the actions menu, type 'done'\n");
 
                     String nL = scanner.nextLine();
@@ -74,24 +74,25 @@ public class TasklyView {
                         break;
                     }
                     
-                    if(nL.equals("COMPLETE")){
-                        System.out.println("Enter the course name:");
-                        String courseName = scanner.nextLine();
+                    // if(nL.equals("sorted")){
+                    //    System.out.println("Please type in course name");
+                    //    nL = scanner.nextLine();
+                    //    System.out.println(taskManager.getSortedByMins(nL));
+                    //    continue;
+                    // }
 
-                        System.out.println("Enter the task name:");
-                        String taskName = scanner.nextLine();
-
-                        boolean completed = taskManager.completeTask(courseName, taskName);
-
-                        if(completed){
-                            System.out.println("Task marked as completed!");
-                        }
-                        else{
-                            System.out.println("Task not found or already completed.");
-                        }
-                        continue;
+                    if(nL.equals("sorted")){
+                       System.out.println("Please type in course name");
+                       nL = scanner.nextLine();
+                       String result = taskManager.getSortedByMins(nL);
+                       if(result.equals("No tasks available.")){
+                            System.out.println("Either this course does not exist or no task items are in this course");
+                            continue;
+                       }
+                       System.out.println(result);
+                       continue;
                     }
-
+                    
                     // System.out.println("code comes here 1");
                     String courseName = nL;
                     if(taskManager.getNextTask(courseName).equals("error")){
