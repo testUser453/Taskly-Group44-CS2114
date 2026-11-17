@@ -1,4 +1,4 @@
-# Taskly : Deliverable 3
+# Taskly : Deliverable 4
 
 ## Project Overview
 
@@ -134,10 +134,10 @@ We used ChatGPT to review parts of our Java code, help identify problems with Sc
 
 Make sure the Java files are in the same folder or package.
 
-Compile the program:
+Compile our program:
 
 ```bash
-javac *.java
+javac TasklyController.java TasklyView.java Task.java Course.java TasklyDriver.java
 ```
 
 Run Taskly with the driver: TasklyModelDriver
@@ -164,3 +164,18 @@ CS_2114 weekly_homework 60
 ```
 
 The `ACTION` menu allows users to view all tasks for a course, view the next task, or remove the next task.
+
+# To test our program:
+
+## Step 1. Compile all the Test Classes
+
+```bash
+javac -cp ".:lib/*" TasklyControllerTest.java TaskTest.java CourseTest.java
+```
+
+## Step 2. Run the JUnit Tests:
+
+```bash
+java -jar lib/junit-platform-console-standalone-*.jar execute --class-path bin --scan-class-path
+```
+
